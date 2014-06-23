@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.imallen.hmt</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>6C68D0BB-A89A-4FDD-BB99-B5A5B460646E</key>
+		<array/>
+	</dict>
+	<key>createdby</key>
+	<string>Allen Hsu</string>
+	<key>description</key>
+	<string>Identify phone numbers with Sougou Haomatong</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Sougou Haomatong</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>hmt</string>
+				<key>runningsubtext</key>
+				<string>Please wait...</string>
+				<key>script</key>
+				<string>require_once('workflows.php');
+$w = new Workflows();
+
+$query = trim("{query}");
+$query = preg_replace('/\D/', '', $query);
+
+if (strlen($query) &gt; 5) {
+	$data = $w-&gt;request('http://data.haoma.sogou.com/vrapi/query_number.php?number=' . $query . '&amp;type=json&amp;callback=show');
+	preg_match('/{[^}]*}/', $data, $matches);
+	$json = json_decode($matches[0]);
+	if ($json-&gt;errorCode == 0) {
+		$numInfo = $json-&gt;NumInfo;
+		if (isset($json-&gt;Amount) &amp;&amp; $json-&gt;Amount &gt; 0) {
+			$numInfo = $numInfo . ' (' . $json-&gt;Amount . ' reports)';
+		}
+		$w-&gt;result($query, $query, $query, $numInfo, 'fileicon:/Applications/Contacts.app');
+		echo $w-&gt;toxml();
+	} else {
+		$w-&gt;result($query, $query, $query, $json-&gt;description, 'fileicon:/Applications/Contacts.app');
+		echo $w-&gt;toxml();
+	}
+} else {
+	$w-&gt;result($query, $query, $query, 'Please input more digits...', 'fileicon:/Applications/Contacts.app');
+	echo $w-&gt;toxml();
+}</string>
+				<key>subtext</key>
+				<string>Please input a phone number including area code</string>
+				<key>title</key>
+				<string>Identify phone number with Sogou Haomatong</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>6C68D0BB-A89A-4FDD-BB99-B5A5B460646E</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>6C68D0BB-A89A-4FDD-BB99-B5A5B460646E</key>
+		<dict>
+			<key>ypos</key>
+			<real>60</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>www.imallen.com</string>
+</dict>
+</plist>
