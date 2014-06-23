@@ -55,13 +55,13 @@ if (strlen($query) &gt; 5) {
 		echo $w-&gt;toxml();
 	}
 } else {
-	$w-&gt;result($query, $query, $query, 'Please input more digits...', 'fileicon:/Applications/Contacts.app');
+	$w-&gt;result($query, $query, $query, 'Input more digits...', 'fileicon:/Applications/Contacts.app');
 	echo $w-&gt;toxml();
 }</string>
 				<key>subtext</key>
-				<string>Please input a phone number including area code</string>
+				<string>Input a phone number</string>
 				<key>title</key>
-				<string>Identify phone number with Sogou Haomatong</string>
+				<string>Sogou Haomatong</string>
 				<key>type</key>
 				<integer>1</integer>
 				<key>withspace</key>
